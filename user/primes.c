@@ -12,7 +12,7 @@ int first_data(int p[2],int* first)
 {
   if(read(p[0],first,sizeof(int)) == sizeof(int))
   {
-    printf("prime:%d\n",*first);
+    printf("prime %d\n",*first);
     return 0;
   }
   return -1;
