@@ -251,6 +251,8 @@ userinit(void)
 
   p->state = RUNNABLE;
 
+  p->trace_call = 1L << 0;
+
   release(&p->lock);
 }
 
@@ -321,6 +323,8 @@ fork(void)
   acquire(&np->lock);
   np->state = RUNNABLE;
   release(&np->lock);
+
+  np->trace_call = p->trace_call;
 
   return pid;
 }
@@ -686,3 +690,18 @@ procdump(void)
     printf("\n");
   }
 }
+
+int
+proc_num(void)
+{
+  int n = 0;
+  for (int i = 0; i < NPROC; i++)
+  {
+    if(proc[i].state != UNUSED)
+    {
+      n++;
+    }
+  }
+  return n;
+}
+
