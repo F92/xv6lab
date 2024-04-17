@@ -700,3 +700,21 @@ procdump(void)
     printf("\n");
   }
 }
+
+uint32
+pgaccess(uint64 base,int size)
+{
+  uint32 mask = 0;
+  pte_t* pt = walk(myproc()->pagetable,base,0);
+  for (int i = 0; i < size; i++)
+  {
+    if(*pt & PTE_A)
+    {
+      mask = mask | (1L << i);
+      *pt = *pt & (~PTE_A);
+    }
+    pt++;
+  }
+  return mask;
+    
+}

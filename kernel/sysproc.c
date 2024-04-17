@@ -74,7 +74,14 @@ sys_sleep(void)
 int
 sys_pgaccess(void)
 {
-  // lab pgtbl: your code here.
+  uint64 buf_base;
+  int size;
+  uint64 mask;
+  argaddr(0,&buf_base);
+  argint(1,&size);
+  argaddr(2,&mask);
+  uint32 n = pgaccess(buf_base,size);
+  copyout(myproc()->pagetable,mask,(char*)&n,sizeof(uint32));
   return 0;
 }
 #endif
