@@ -78,7 +78,21 @@ usertrap(void)
 
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
+  {
+    if(myproc()->time != 0)
+    {
+      if(myproc()->timer == myproc()->time)
+      {
+        p->trapframe->epc = myproc()->fun;
+        myproc()->timer = 0;
+      }
+      else
+      {
+        myproc()->timer++;
+      }
+    }
     yield();
+  }
 
   usertrapret();
 }
