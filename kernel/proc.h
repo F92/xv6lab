@@ -107,4 +107,6 @@ struct proc {
   int time;
   int timer;
   uint64 fun;
+  struct trapframe pre;
+  int isreturn;
 };

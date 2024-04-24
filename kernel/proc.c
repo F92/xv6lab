@@ -127,6 +127,7 @@ found:
   p->time = 0;
   p->fun = 0;
   p->timer = 0;
+  p->isreturn = 0;
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
     freeproc(p);

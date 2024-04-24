@@ -79,12 +79,14 @@ usertrap(void)
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
   {
-    if(myproc()->time != 0)
+    if(myproc()->time != 0 && myproc()->isreturn == 0)
     {
       if(myproc()->timer == myproc()->time)
       {
+        p->pre = *p->trapframe;
         p->trapframe->epc = myproc()->fun;
         myproc()->timer = 0;
+        myproc()->isreturn = 1;
       }
       else
       {
